@@ -7,10 +7,14 @@ class Program
 {
     static void Main()
     {
-        Console.WindowHeight = 16;
-        Console.WindowWidth = 32;
-        int screenwidth = Console.WindowWidth;
-        int screenheight = Console.WindowHeight;
+        int screenwidth = 32;
+        int screenheight = 16;
+        try
+        {
+            Console.WindowHeight = screenheight;
+            Console.WindowWidth = screenwidth;
+        }
+        catch (PlatformNotSupportedException) { }
         Random randomnummer = new Random();
 
         Pixel hoofd = new Pixel();
