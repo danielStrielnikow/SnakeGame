@@ -82,24 +82,33 @@ class Program
             Console.Write(" Score: " + score + " | Best: " + bestScore + " ");
 
             // Odczyt klawisza
-            ConsoleKeyInfo info = Console.ReadKey(true);
-
-            switch (info.Key)
+            if (Console.KeyAvailable)
             {
-                case ConsoleKey.UpArrow:
-                    movement = "UP";
-                    break;
-                case ConsoleKey.DownArrow:
-                    movement = "DOWN";
-                    break;
-                case ConsoleKey.LeftArrow:
-                    movement = "LEFT";
-                    break;
-                case ConsoleKey.RightArrow:
-                    movement = "RIGHT";
-                    break;
+                ConsoleKeyInfo info = Console.ReadKey(true);
+
+                // Blokada zawracania w przeciwnym kierunku
+                switch (info.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        if (movement != "DOWN")
+                            movement = "UP";
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if (movement != "UP")
+                            movement = "DOWN";
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        if (movement != "RIGHT")
+                            movement = "LEFT";
+                        break;
+                    case ConsoleKey.RightArrow:
+                        if (movement != "LEFT")
+                            movement = "RIGHT";
+                        break;
+                }
             }
 
+            // Ruch weza
             if (movement == "UP")
                 hoofd.yPos--;
             if (movement == "DOWN")
@@ -109,7 +118,7 @@ class Program
             if (movement == "RIGHT")
                 hoofd.xPos++;
 
-            // Zjedzenie jedzenia - naprawiony warunek
+            // Zjedzenie jedzenia
             if (hoofd.xPos == foodXpos && hoofd.yPos == foodYpos)
             {
                 score++;
