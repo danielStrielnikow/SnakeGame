@@ -20,6 +20,8 @@ class Program
 
         string movement = "RIGHT";
         int score = 0;
+        int level = 1;
+        int gameSpeed = 150;
 
         List<int> teljePositie = new List<int>();
         teljePositie.Add(hoofd.xPos);
@@ -77,7 +79,7 @@ class Program
             // Wyswietlanie wyniku
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.SetCursorPosition(1, 0);
-            Console.Write(" Score: " + score + " ");
+            Console.Write(" Score: " + score + " | Level: " + level + " ");
 
             // Odczyt klawisza
             if (Console.KeyAvailable)
@@ -122,6 +124,13 @@ class Program
                 score++;
                 obstacleXpos = randomnummer.Next(2, screenwidth - 2);
                 obstacleYpos = randomnummer.Next(2, screenheight - 2);
+
+                // Przyspieszenie co 3 punkty
+                if (score % 3 == 0 && gameSpeed > 50)
+                {
+                    gameSpeed -= 15;
+                    level++;
+                }
             }
             else
             {
@@ -144,6 +153,8 @@ class Program
                 Console.WriteLine("Game Over!");
                 Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 1);
                 Console.WriteLine("Twoj wynik: " + score);
+                Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 2);
+                Console.WriteLine("Poziom: " + level);
                 Console.ReadKey();
                 Environment.Exit(0);
             }
@@ -159,12 +170,14 @@ class Program
                     Console.WriteLine("Game Over!");
                     Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 1);
                     Console.WriteLine("Twoj wynik: " + score);
+                    Console.SetCursorPosition(screenwidth / 5, screenheight / 2 + 2);
+                    Console.WriteLine("Poziom: " + level);
                     Console.ReadKey();
                     Environment.Exit(0);
                 }
             }
 
-            Thread.Sleep(100);
+            Thread.Sleep(gameSpeed);
         }
     }
 }
